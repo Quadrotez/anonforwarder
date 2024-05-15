@@ -36,4 +36,4 @@
 </ol>
 
 <br><br><br>
-<p>Использует фреймворк Aiogram</p>
+<p>Использует фреймворк <a href="https://github.com/aiogram/aiogram">Aiogram</a></p>
