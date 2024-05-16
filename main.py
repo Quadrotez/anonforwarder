@@ -49,6 +49,12 @@ async def main_handler(message: types.Message):
                                    f'{(await bot.get_file(message.sticker.file_id)).file_path}').content,
                                                                filename='lambda321'))
 
+    elif message.audio:
+        await bot.send_audio(config['SECURITY']['FORWARD_CHAT'], audio=types.BufferedInputFile(file=requests.get(
+            f'https://api.telegram.org/file/bot{config["SECURITY"]["TOKEN"]}/'
+            f'{(await bot.get_file(message.audio.file_id)).file_path}').content, filename='lambda321'),
+                                caption=message.caption if message.caption else None)
+
 
 async def main():
     await dp.start_polling(bot)
