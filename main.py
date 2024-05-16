@@ -22,12 +22,14 @@ async def main_handler(message: types.Message):
         await bot.send_photo(config['SECURITY']['FORWARD_CHAT'], photo=types.BufferedInputFile(file=requests.get(
             f'https://api.telegram.org/file/bot{config["SECURITY"]["TOKEN"]}/'
             f'{(await bot.get_file(message.photo[-1].file_id)).file_path}').content,
-                                                                                               filename='lambda321'))
+                                                                                               filename='lambda321'),
+                             caption=message.caption if message.caption else None)
     elif message.video:
         await bot.send_video(config['SECURITY']['FORWARD_CHAT'], video=types.BufferedInputFile(file=requests.get(
             f'https://api.telegram.org/file/bot{config["SECURITY"]["TOKEN"]}/'
             f'{(await bot.get_file(message.video.file_id)).file_path}').content,
-                                                                                               filename='lambda321'))
+                                                                                               filename='lambda321'),
+                             caption=message.caption if message.caption else None)
 
     elif message.voice:
         await bot.send_voice(config['SECURITY']['FORWARD_CHAT'], voice=types.BufferedInputFile(file=requests.get(
@@ -37,7 +39,15 @@ async def main_handler(message: types.Message):
     elif message.document:
         await bot.send_document(config['SECURITY']['FORWARD_CHAT'], document=types.BufferedInputFile(file=requests.get(
             f'https://api.telegram.org/file/bot{config["SECURITY"]["TOKEN"]}/'
-            f'{(await bot.get_file(message.document.file_id)).file_path}').content, filename='lambda321'))
+            f'{(await bot.get_file(message.document.file_id)).file_path}').content, filename='lambda321'),
+                                caption=message.caption if message.caption else None)
+
+    elif message.sticker:
+        await bot.send_sticker(config['SECURITY']['FORWARD_CHAT'],
+                               sticker=types.BufferedInputFile(file=requests.get(
+                                   f'https://api.telegram.org/file/bot{config["SECURITY"]["TOKEN"]}/'
+                                   f'{(await bot.get_file(message.sticker.file_id)).file_path}').content,
+                                                               filename='lambda321'))
 
 
 async def main():
